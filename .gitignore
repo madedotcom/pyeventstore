@@ -1,6 +1,7 @@
 __pycache__
 *.py[co]
 _build
+_local
 *.egg-info/
 TAGS
 .#*
