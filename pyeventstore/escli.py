@@ -13,7 +13,10 @@ def get_options(prog, args):
     parser = argparse.ArgumentParser(prog=prog)
     parser.add_argument(
         '--host', dest='host', default='localhost',
-        help='Eventstore host (default: localhost)')
+        help='eventstore host (default: localhost)')
+    parser.add_argument(
+        '--debug', dest='debug', action='store_true',
+        help='Show debug messages')
     subparsers = parser.add_subparsers()
 
     add_subcommand(subparsers, writeevents.WriteEvents)

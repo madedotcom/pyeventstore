@@ -47,14 +47,18 @@ class EventstoreClient(object):
         output.write(serialized)
 
         self._socket.sendall(output.getvalue())
-        return self.receive_response()
+        return self.receive_response(correlation_id)
 
-    def receive_response(self):
-        length = self._socket.recv(4)
-        response = self._socket.recv(struct.unpack('<I', length)[0])
+    def receive_response(self, request_correlation_id):
+        length = struct.unpack('<I', self._socket.recv(4))[0]
+        buf = StringIO()
+        while len(buf.getvalue()) < length:
+            buf.write(self._socket.recv(length - len(buf.getvalue())))
+        response = buf.getvalue()
         command, flags, correlation_id = \
-            struct.unpack('cc16s', response[:self.HEADER_LENGTH])
+            struct.unpack('cc16s', response[:18])
+        assert request_correlation_id == correlation_id, 'Correlation id error'
         response_cls = conf.classes[command]
         instance = response_cls()
-        instance.ParseFromString(response)
+        instance.ParseFromString(response[18:])
         return instance

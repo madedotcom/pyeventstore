@@ -49,4 +49,5 @@ class WriteEvents(object):
 
     def process_rows(self, rows, esclient):
         res = esclient.write_events(self.opts.stream, rows)
-        print res
+        if self.opts.debug:
+            print(res)
