@@ -35,4 +35,9 @@ setup(
     keywords=('eventstore', ),
     zip_safe=False,
     install_requires=[r for r in read("requirements.txt").split("\n") if r],
+    entry_points={
+            'console_scripts': [
+                'escli = pyeventstore.escli:climain',
+            ],
+        }
 )

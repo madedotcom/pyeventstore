@@ -30,5 +30,9 @@ def add_subcommand(subparsers, cls):
     cls.extend_arguments(parser)
 
 
-if __name__ == '__main__':
+def climain():
     main(sys.argv[0], sys.argv[1:])
+
+
+if __name__ == '__main__':
+    climain()

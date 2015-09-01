@@ -1,0 +1,5 @@
+include requirements.txt
+include README.rst
+include LICENSE
+recursive-exclude docs *
+global-exclude tests/
